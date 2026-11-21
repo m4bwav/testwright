@@ -1,0 +1,10 @@
+{
+  "name": "testwright",
+  "version": "0.1.0",
+  "description": "Testing for real application code across C#/.NET, Unity, TypeScript/npm, Python and Roblox Luau: risk-first test plan, one run summary across runners (failures, flaky reruns, slow tests, changed-line coverage), suite quality (mutation testing, assertions that never fail, tests that only check mocks), characterization tests for legacy code, and game tests (play mode, input, seed replays, save/load round trips, bot playthroughs). Not for browser end-to-end tests or skill evals.",
+  "author": {
+    "name": "Mark Rogers"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/m4bwav/testwright"
+}
