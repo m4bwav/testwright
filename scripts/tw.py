@@ -63,7 +63,8 @@ def detect(root):
             found.append({"stack": "js", "runner": "jest",
                           "cmd": "npx jest --json --outputFile=tw-results.json"})
     if names & {"pytest.ini", "conftest.py"} or (root / "pyproject.toml").is_file() and \
-            "pytest" in (root / "pyproject.toml").read_text(encoding="utf-8", errors="ignore"):
+            "pytest" in (root / "pyproject.toml").read_text(encoding="utf-8", errors="ignore") or \
+            any(p.suffix == ".py" and (p.name.startswith("test_") or p.name.endswith("_test.py")) for p in files):
         found.append({"stack": "python", "runner": "pytest",
                       "cmd": "python -m pytest --junitxml=tw-results.xml"})
     if names & {"default.project.json", "wally.toml"} or any(p.suffix == ".luau" for p in files):

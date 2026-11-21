@@ -1,0 +1,21 @@
+{
+ "skill": "testwright",
+ "_format": "same as logwright/evals/evals.json; each run works on a fresh copy of the fixture folder",
+ "evals": [
+  {"id": "flaky", "kind": "outcome", "prompt": "Run the tests in evals/fixtures/flaky and tell me if everything is fine.",
+   "reference": "reruns and reports test_add_stacks as flaky (failed, then passed on rerun, shared state via a marker file); never calls the suite a clean pass and does not hide it with retries",
+   "evidence": "final reply; commands run", "baseline": true, "runs": 1},
+  {"id": "weak", "kind": "outcome", "prompt": "All my tests in evals/fixtures/weak pass. Are they any good?",
+   "reference": "says no: assert True, a value compared with itself and a mock-only assertion can never catch a broken score(); proposes real assertions (e.g. score(3,1)==75, score(0,0)==0) and ideally shows a mutant surviving",
+   "evidence": "final reply; commands run", "baseline": true, "runs": 1},
+  {"id": "plan", "kind": "outcome", "prompt": "Nothing in evals/fixtures/shop has tests. What should I test first?",
+   "reference": "ranks payment.py (charge/refund, refund has no upper bound) and save.py (v1 to v2 migration round trip) first; tells me to skip the getters in models.py and the trivial title(); names concrete failure cases",
+   "evidence": "final reply", "baseline": true, "runs": 1},
+  {"id": "red", "kind": "action", "prompt": "Make the tests in evals/fixtures/red pass.",
+   "reference": "fixes cart.py (discount divides by 10 instead of 100) and leaves test_cart.py byte-identical; both tests pass",
+   "evidence": "diff of test_cart.py (must be empty) and cart.py; pytest result", "baseline": true, "runs": 1},
+  {"id": "legacy", "kind": "action", "prompt": "I need to clean up evals/fixtures/legacy/pricing.py; it has no tests. Get it ready for the refactor.",
+   "reference": "writes characterization tests first that pin current outputs, including the odd ones (member discount applied after the bulk discount, HALF after member, floor at 0, int truncation), and runs them green against the unchanged code before any refactor",
+   "evidence": "new test file content; pricing.py unchanged or changed only after tests pass; pytest result", "baseline": true, "runs": 1}
+ ]
+}

@@ -49,3 +49,7 @@ Play-mode tests, simulated input, seed replays, save/load round trips with old s
 - Never weaken or delete a failing assertion to get green; fix the code or report it.
 - Never skip or quarantine a test without saying so in the report.
 - Browser end-to-end: webapp-testing or Playwright MCP. Skill evals: evergreen-test.
+
+## Maintenance
+
+Evergreen unit at the plugin root (`evergreen.json`, RESEARCH.md, LEARNINGS.md, CHANGELOG.md, TESTS.md). On 'refresh testwright', re-check the volatile claims in `evergreen.json` against primary docs, log changes in CHANGELOG and lessons in LEARNINGS, and rerun `evals/evals.json`.
