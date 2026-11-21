@@ -1,0 +1,1 @@
+{"testResults":[{"assertionResults":[{"fullName":"sum adds","status":"passed","duration":5},{"fullName":"sum fails","status":"failed","duration":900,"failureMessages":["expected 3"]},{"fullName":"todo","status":"pending"}]}]}
