@@ -85,9 +85,6 @@ class Detect(unittest.TestCase):
         self.assertFalse(rows[0]["has_test"])
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class BarePytestDetect(unittest.TestCase):
     def test_bare_test_files_detect_python(self):
@@ -95,3 +92,19 @@ class BarePytestDetect(unittest.TestCase):
         d = Path(tempfile.mkdtemp())
         (d / "test_x.py").write_text("def test_a():\n    assert 1 == 1\n")
         self.assertEqual([f["stack"] for f in tw.detect(d)], ["python"])
+
+
+class UnknownStackDetect(unittest.TestCase):
+    def test_unknown_stack_reported(self):
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        (d / "main.go").write_text("package main")
+        found = tw.detect(d)
+        self.assertEqual([f["stack"] for f in found], ["unknown"])
+        code, out = run("detect", str(d))
+        self.assertEqual(code, 0)
+        self.assertEqual(json.loads(out)[0]["stack"], "unknown")
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,14 +1,16 @@
 ---
 name: testwright
-description: "Test real application code in C#/.NET, Unity, TypeScript/npm, Python or Roblox Luau: plan tests by risk, run a suite into one summary (failures, flaky reruns, slow tests, changed-line coverage), judge suite quality (mutation testing, assertions that never fail, tests of mocks), pin legacy code with characterization tests, test games (play mode, input, seed replays, save/load round trips, bot playthroughs). Use on 'what should I test', 'write tests for this', 'run the tests and tell me what failed', 'is this test flaky', 'are my tests any good', 'coverage on my diff', 'add tests before I refactor this', 'test my Unity game'. Not for browser end-to-end tests (webapp-testing, Playwright) or skill evals (evergreen-test)."
+description: "Test any code in any language or stack, any kind of test: unit, integration, end-to-end, API, property-based, mutation, snapshot and visual, performance, data and pipeline, game, manual and exploratory. Plan tests by risk, run a suite into one summary (failures, flaky reruns, slow tests, changed-line coverage), judge suite quality (mutation, assertions that never fail, tests of mocks), pin legacy code with characterization tests, test games. Knows .NET, Unity, TypeScript/npm, Python and Roblox Luau so far and adds a reference for each new stack it meets. Use on 'what should I test', 'write tests for this', 'run the tests and tell me what failed', 'is this test flaky', 'are my tests any good', 'coverage on my diff', 'add tests before I refactor this', 'test my Go service', 'test my Unity game'. Not for skill evals (evergreen-test)."
 license: MIT
 metadata:
-  version: 0.1.0
+  version: 0.1.1
 ---
 
 # testwright
 
 Outcome: tests that would fail if the code broke, aimed at what costs most when it breaks, with every claim about the suite backed by a run.
+
+Scope: all testing, in any language and stack, of any kind. The method (risk-first planning, suite quality, characterization of legacy code) applies everywhere; stack references hold what was learned per stack. .NET, Unity, TypeScript/npm, Python and Roblox Luau are the first stacks, not the limit.
 
 `TW` means `python scripts/tw.py` from the plugin root (run it, do not read it). Standard library only; `--json` gives one JSON object.
 
@@ -20,7 +22,7 @@ Outcome: tests that would fail if the code broke, aimed at what costs most when 
 
 ## 2. Run and read
 
-1. `TW detect <repo>` names the stack and runner. Load only that stack's reference: [dotnet](../../references/dotnet.md), [unity](../../references/unity.md), [js](../../references/js.md), [python](../../references/python.md), [luau](../../references/luau.md).
+1. `TW detect <repo>` names the stack and runner. Load only that stack's reference: [dotnet](../../references/dotnet.md), [unity](../../references/unity.md), [js](../../references/js.md), [python](../../references/python.md), [luau](../../references/luau.md). `unknown` means a new stack: see section 7.
 2. `TW run <repo> --reruns 2` runs dotnet, Vitest/Jest or pytest with report flags and prints failures, flaky tests (failed, then passed on rerun) and totals. Unity and Luau run by the commands in their reference; then `TW parse <results files>`.
 3. `TW slow <results> --top 10` lists the slowest tests.
 4. Report failures with file, test name and first message line. A flaky test is a bug to report, never a pass; do not raise retries to hide it.
@@ -43,12 +45,19 @@ Pin behaviour before changing it: characterization tests record what the code do
 
 Play-mode tests, simulated input, seed replays, save/load round trips with old save fixtures, bot playthroughs that fail on errors or softlocks: [games](../../references/games.md). Failing bot logs go to logwright (`lgw.py query`); proposed work goes to grindwright, never written into its ledger from here.
 
+## 7. A new stack
+
+1. `TW detect` says `unknown`, or names nothing for the language you see.
+2. Check `references/` for that stack. If missing, research from primary docs its usual runner, how to get a machine-readable report (JUnit XML is the common target, which `TW parse` reads), and its coverage and mutation tools.
+3. Write `references/<stack>.md` in the shape of the others (run command, report flags, coverage, mutation, gotchas) and add a LEARNINGS line naming the stack. Teach `detect` the marker file when it is cheap.
+4. Then carry on with sections 1 to 5 as usual.
+
 ## Rules
 
 - Test edits happen in a worktree and a PR, like any code change.
 - Never weaken or delete a failing assertion to get green; fix the code or report it.
 - Never skip or quarantine a test without saying so in the report.
-- Browser end-to-end: webapp-testing or Playwright MCP. Skill evals: evergreen-test.
+- Browser end-to-end: drive Playwright (or the webapp-testing skill) under the same rules. Skill evals: evergreen-test.
 
 ## Maintenance
 

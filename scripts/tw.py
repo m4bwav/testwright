@@ -70,6 +70,9 @@ def detect(root):
     if names & {"default.project.json", "wally.toml"} or any(p.suffix == ".luau" for p in files):
         found.append({"stack": "luau", "runner": "jest-lua or TestEZ (run-in-roblox / Lune)",
                       "cmd": None})
+    if not found:
+        found.append({"stack": "unknown", "runner": None, "cmd": None,
+                      "hint": "no known stack; find its runner and report format, then add references/<stack>.md"})
     return found
 
 
@@ -193,7 +196,7 @@ def print_summary(s, as_json):
 def run_suite(root, reruns, as_json):
     stacks = [s for s in detect(root) if s["cmd"] and s["stack"] != "unity"]
     if not stacks:
-        print("no runnable suite detected (Unity and Luau: see the skill's references)", file=sys.stderr)
+        print("no runnable suite detected (Unity, Luau or an unknown stack: run its own runner, then tw.py parse)", file=sys.stderr)
         return 2
     out = Path(tempfile.mkdtemp(prefix="tw-"))
     stack = stacks[0]
