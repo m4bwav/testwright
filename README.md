@@ -2,15 +2,18 @@
 
 ![testwright banner](.github/images/banner.jpg)
 
-Testing for real application code in C#/.NET, Unity, TypeScript/npm, Python and Roblox Luau. A Claude Code plugin with one skill and a standard-library script.
+Testing for any code in any language or stack, and any kind of test: unit, integration, end-to-end, API, property-based, mutation, snapshot and visual, performance, data and pipeline, game, manual and exploratory. A Claude Code plugin with one skill and a standard-library script.
+
+The method works anywhere; stack knowledge grows. It already knows C#/.NET, Unity, TypeScript/npm, Python and Roblox Luau. When it meets a stack it has no notes for, it researches the runner and report format and writes a new reference, so the next run starts from there.
 
 - Plans tests by risk: money, saves, deletes, auth, migrations and parsing first, untested files ranked higher, getters skipped.
 - Runs a suite into one summary: failures, flaky tests (failed, then passed on rerun), slow tests, and coverage of the lines you changed.
 - Judges whether the tests are any good: assertions that can never fail, tests with no assertion, tests that only check mocks, and mutation testing (Stryker.NET, StrykerJS, mutmut, or hand mutants for Unity and Luau).
 - Pins legacy code with characterization tests before a refactor.
+- Learns new stacks: `tw.py detect` reports `unknown`, and the skill adds `references/<stack>.md` plus a learning.
 - Game testing: play mode, simulated input, seed replays, save/load round trips with old saves, bot playthroughs. Failing bot logs go to logwright.
 
-Not for browser end-to-end tests (use Playwright) or skill evals (evergreen-test).
+Not for skill evals (evergreen-test).
 
 ## Install
 

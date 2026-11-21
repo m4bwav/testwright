@@ -1,7 +1,7 @@
 {
   "name": "testwright",
-  "version": "0.1.0",
-  "description": "Testing for real application code across C#/.NET, Unity, TypeScript/npm, Python and Roblox Luau: risk-first test plan, one run summary across runners (failures, flaky reruns, slow tests, changed-line coverage), suite quality (mutation testing, assertions that never fail, tests that only check mocks), characterization tests for legacy code, and game tests (play mode, input, seed replays, save/load round trips, bot playthroughs). Not for browser end-to-end tests or skill evals.",
+  "version": "0.1.1",
+  "description": "All testing for any language and stack, any kind (unit, integration, end-to-end, API, property-based, mutation, snapshot, performance, data, game, exploratory): risk-first test plan, one run summary (failures, flaky reruns, slow tests, changed-line coverage), suite quality, characterization tests for legacy code, game tests. Knows .NET, Unity, TypeScript/npm, Python and Roblox Luau first and writes a reference for each new stack it meets.",
   "author": {
     "name": "Mark Rogers"
   },

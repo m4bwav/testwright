@@ -6,7 +6,7 @@
   "files": {"research": "RESEARCH.md", "changelog": "CHANGELOG.md", "learnings": "LEARNINGS.md", "tests": "TESTS.md"},
   "protocol": "plugin",
   "source": null,
-  "topic": "Application test tooling across .NET, Unity, TypeScript, Python and Roblox Luau: runners, report formats, diff coverage, mutation testing, characterization tests, game test practice",
+  "topic": "Software testing in any language and stack and of every kind (unit, integration, e2e, API, property-based, mutation, snapshot/visual, performance, data/pipeline, game, exploratory): runners and machine-readable report formats per stack, diff coverage, mutation tools, characterization tests; current stack notes cover .NET, Unity, TypeScript, Python, Roblox Luau",
   "tier": "moderate",
   "interval_days": 30,
   "last_checked": "2026-11-21",
