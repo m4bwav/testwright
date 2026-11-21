@@ -1,0 +1,2 @@
+<test-run><test-suite><test-case fullname="Game.SaveRoundTrip" result="Passed" duration="0.25"/>
+<test-case fullname="Game.Spawn" result="Failed" duration="2.0"><failure><message>null ref</message></failure></test-case></test-suite></test-run>

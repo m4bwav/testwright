@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestRun xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010"><Results>
+<UnitTestResult testName="Calc.Adds" outcome="Passed" duration="00:00:00.0120000"/>
+<UnitTestResult testName="Calc.Divides" outcome="Failed" duration="00:00:01.5000000"><Output><ErrorInfo><Message>Expected 2 but was 3</Message></ErrorInfo></Output></UnitTestResult>
+<UnitTestResult testName="Calc.Later" outcome="NotExecuted" duration="00:00:00"/>
+</Results></TestRun>
