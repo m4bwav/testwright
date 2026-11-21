@@ -1,1 +1,2 @@
 - 2026-11-21: research pass and scope plan written; repo created (private).
+- 2026-11-21 session 4: evergreen unit, 5 evals with baselines, README banner, detect fix for bare pytest folders, release 0.1.0.

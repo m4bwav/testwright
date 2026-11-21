@@ -1,0 +1,33 @@
+{
+  "evergreen": "1.0",
+  "name": "testwright",
+  "kind": "plugin",
+  "main": "skills/testwright/SKILL.md",
+  "files": {"research": "RESEARCH.md", "changelog": "CHANGELOG.md", "learnings": "LEARNINGS.md", "tests": "TESTS.md"},
+  "protocol": "plugin",
+  "source": null,
+  "topic": "Application test tooling across .NET, Unity, TypeScript, Python and Roblox Luau: runners, report formats, diff coverage, mutation testing, characterization tests, game test practice",
+  "tier": "moderate",
+  "interval_days": 30,
+  "last_checked": "2026-11-21",
+  "next_due": "2026-12-21",
+  "verify_at_use": false,
+  "volatile_claims": [
+    "dotnet test TRX logger flags and Microsoft.Testing.Platform switch",
+    "Vitest and Jest JSON reporter flags",
+    "Unity Test Framework batchmode flags",
+    "Stryker.NET, StrykerJS and mutmut command names",
+    "Roblox Luau test runners (jest-lua, TestEZ, Lune)",
+    "diff-cover options"
+  ],
+  "contradiction": null,
+  "events": [],
+  "streak": {"quiet": 0, "pinned_min": 0, "pinned_max": 0, "vau_quiet": 0},
+  "history": [{"date": "2026-11-21", "m": null, "interval_after": 30, "note": "created"}],
+  "counts": {"learnings": 2, "changes": 1, "research": 1, "tests": 1},
+  "consolidate_every": 25,
+  "tests": {
+    "last_run": "2026-11-21", "harness": "general-purpose subagents", "env": "windows",
+    "cases": 5, "passed": 5, "failed": 0, "failing": [], "last_failure": null, "research_after_days": null
+  }
+}

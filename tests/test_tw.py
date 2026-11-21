@@ -87,3 +87,11 @@ class Detect(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class BarePytestDetect(unittest.TestCase):
+    def test_bare_test_files_detect_python(self):
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        (d / "test_x.py").write_text("def test_a():\n    assert 1 == 1\n")
+        self.assertEqual([f["stack"] for f in tw.detect(d)], ["python"])
