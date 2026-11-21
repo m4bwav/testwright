@@ -2,7 +2,7 @@
 
 Source: [research pass](../research/2026-11-21-research-pass.md).
 
-## Scope (agent's ruling, flagged in the chain HANDOFF)
+## Scope (agent's ruling, flagged for the owner)
 - In: risk-first test planner; one results format across dotnet, Unity, Vitest/Jest, pytest, Luau; flaky reruns, slow tests; changed-line coverage by calling diff-cover on Cobertura/lcov; suite quality (wrap Stryker.NET, StrykerJS, mutmut; tw.py lint for assertions that never fail and tests of mocks); characterization tests (Verify, syrupy, Vitest snapshots); game testing (Unity play-mode with Input System fixture, seed replays, save/load round trips, bot playthroughs) with hooks to grindwright and logwright.
 - Out: browser end-to-end (webapp-testing, Playwright MCP); skill evals (evergreen-test).
 
@@ -13,3 +13,12 @@ Source: [research pass](../research/2026-11-21-research-pass.md).
 
 ## Order
 1. Repo scaffold (done this session), 2. tw.py parsers + tests, 3. SKILL.md + references, 4. evergreen unit, 5. evals, 6. README with banner, 7. release 0.1.0 and install.
+
+## Goal
+Ship the plugin as scoped below.
+
+## Status
+Done: released 0.1.0 (2026-11-21); see HANDOFF.md.
+
+## Next single action
+See HANDOFF.md.
