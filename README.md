@@ -17,18 +17,24 @@ Not for skill evals (evergreen-test).
 
 ## Install
 
-Clone the repo and add its parent folder as a local Claude Code marketplace, or copy `skills/testwright` and `scripts/` into your own plugin.
+```
+claude plugin marketplace add m4bwav/testwright
+claude plugin install testwright@testwright
+```
+
+Or clone the repo and run `claude plugin marketplace add ./testwright` on the clone. Full docs: the [wiki](https://github.com/m4bwav/testwright/wiki).
 
 ## Use
 
 Ask in plain words: "what should I test in this repo", "run the tests and tell me what failed", "are my tests any good", "coverage on my diff", "add tests before I refactor this", "test my Unity game". The script also runs on its own:
 
 ```
+python scripts/tw.py detect path/to/repo
 python scripts/tw.py plan path/to/repo
 python scripts/tw.py run path/to/repo --reruns 2
 python scripts/tw.py parse TestResults/*.trx
 python scripts/tw.py slow results.xml --top 10
-python scripts/tw.py changed coverage.xml --base origin/main
+python scripts/tw.py changed coverage.xml --base origin/main --dir path/to/repo
 python scripts/tw.py lint tests/
 ```
 

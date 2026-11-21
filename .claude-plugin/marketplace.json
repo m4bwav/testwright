@@ -1,0 +1,8 @@
+{
+  "name": "testwright",
+  "owner": { "name": "Mark Rogers" },
+  "metadata": { "description": "All testing for any language and stack, of any kind" },
+  "plugins": [
+    { "name": "testwright", "source": "./", "description": "One skill plus tw.py: risk-first plans, run summaries, flaky and slow tests, diff coverage, suite quality, legacy characterization, game tests; learns each new stack" }
+  ]
+}

@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.2 (2026-11-21)
+- Adds .claude-plugin/marketplace.json so the README install works; README lists `detect` and `changed --dir` and links the wiki; pytest.ini keeps `pytest` from collecting the lint fixtures.
+
 ## 0.1.1 (2026-11-21)
 - Scope widened to all testing in any language, stack and kind; the five stacks are the first known, not the limit. New-stack procedure in the skill; `tw.py detect` reports `unknown` cleanly (tested).
 

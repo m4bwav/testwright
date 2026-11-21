@@ -3,7 +3,7 @@ name: testwright
 description: "Test any code in any language or stack, any kind of test: unit, integration, end-to-end, API, property-based, mutation, snapshot and visual, performance, data and pipeline, game, manual and exploratory. Plan tests by risk, run a suite into one summary (failures, flaky reruns, slow tests, changed-line coverage), judge suite quality (mutation, assertions that never fail, tests of mocks), pin legacy code with characterization tests, test games. Knows .NET, Unity, TypeScript/npm, Python and Roblox Luau so far and adds a reference for each new stack it meets. Use on 'what should I test', 'write tests for this', 'run the tests and tell me what failed', 'is this test flaky', 'are my tests any good', 'coverage on my diff', 'add tests before I refactor this', 'test my Go service', 'test my Unity game'. Not for skill evals (evergreen-test)."
 license: MIT
 metadata:
-  version: 0.1.1
+  version: 0.1.2
 ---
 
 # testwright
