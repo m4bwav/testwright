@@ -9,6 +9,8 @@ Commands:
   changed COVERAGE [--base REF] changed lines without coverage (diff-cover if installed)
   lint PATH...                  tests whose assertions can never fail, tests that only test mocks
   plan [DIR]                    risk-first list of source files worth testing first
+  perf RUN --golden G [--history H] [--tolerance PCT] [--bless]
+                                compare a run's metrics JSON to a golden, append to a history file
 Exit codes: 0 ok, 1 failures/findings, 2 usage or tool error.
 """
 import argparse
@@ -412,6 +414,61 @@ def plan(root, top, as_json):
     return 0
 
 
+# ---------- perf ----------
+# Metrics JSON: {"metric_name": number, ...}. Lower is better unless the name ends with _fps or
+# _per_sec, or is listed in a "higher_is_better" array in the file. An optional "label" is kept.
+
+def _metrics(d):
+    return {k: float(v) for k, v in d.items() if isinstance(v, (int, float)) and not isinstance(v, bool)}
+
+
+def _higher_better(name, extra):
+    return name in extra or name.endswith("_fps") or name.endswith("_per_sec")
+
+
+def perf_compare(run, golden, tolerance):
+    extra = set(run.get("higher_is_better", [])) | set(golden.get("higher_is_better", []))
+    rm, gm = _metrics(run), _metrics(golden)
+    rows = []
+    for k in sorted(set(rm) | set(gm)):
+        if k not in rm or k not in gm:
+            rows.append({"metric": k, "status": "missing" if k not in rm else "new",
+                         "golden": gm.get(k), "run": rm.get(k), "change_pct": None})
+            continue
+        g, r = gm[k], rm[k]
+        pct = 0.0 if g == r else (float("inf") if g == 0 else (r - g) / abs(g) * 100)
+        worse = -pct if _higher_better(k, extra) else pct
+        status = "regressed" if worse > tolerance else ("improved" if worse < -tolerance else "ok")
+        rows.append({"metric": k, "status": status, "golden": g, "run": r, "change_pct": round(pct, 2)})
+    return rows
+
+
+def perf(run_path, golden_path, history, tolerance, bless, as_json):
+    run = json.loads(Path(run_path).read_text(encoding="utf-8"))
+    gp = Path(golden_path)
+    if bless or not gp.exists():
+        gp.parent.mkdir(parents=True, exist_ok=True)
+        gp.write_text(json.dumps(run, indent=2) + "\n", encoding="utf-8")
+        print(f"golden written: {gp}")
+        return 0
+    rows = perf_compare(run, json.loads(gp.read_text(encoding="utf-8")), tolerance)
+    bad = [r for r in rows if r["status"] in ("regressed", "missing")]
+    if history:
+        hp = Path(history)
+        hp.parent.mkdir(parents=True, exist_ok=True)
+        entry = {"label": run.get("label"), "metrics": _metrics(run), "regressed": [r["metric"] for r in bad]}
+        with hp.open("a", encoding="utf-8", newline="\n") as fh:
+            fh.write(json.dumps(entry, sort_keys=True) + "\n")
+    if as_json:
+        print(json.dumps(rows, indent=2))
+    else:
+        for r in rows:
+            ch = "" if r["change_pct"] is None else f"{r['change_pct']:+.1f}%"
+            print(f"{r['status']:9s}  {r['metric']}  golden={r['golden']}  run={r['run']}  {ch}")
+        print(f"{len(bad)} regressed or missing (tolerance {tolerance}%)")
+    return 1 if bad else 0
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="tw.py", description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -425,6 +482,9 @@ def main(argv=None):
     p = sub.add_parser("lint"); p.add_argument("paths", nargs="+"); p.add_argument("--json", action="store_true")
     p = sub.add_parser("plan"); p.add_argument("dir", nargs="?", default=".")
     p.add_argument("--top", type=int, default=15); p.add_argument("--json", action="store_true")
+    p = sub.add_parser("perf"); p.add_argument("run"); p.add_argument("--golden", required=True)
+    p.add_argument("--history"); p.add_argument("--tolerance", type=float, default=10.0)
+    p.add_argument("--bless", action="store_true"); p.add_argument("--json", action="store_true")
     a = ap.parse_args(argv)
     try:
         if a.cmd == "detect":
@@ -442,6 +502,8 @@ def main(argv=None):
             return lint(a.paths, a.json)
         if a.cmd == "plan":
             return plan(a.dir, a.top, a.json)
+        if a.cmd == "perf":
+            return perf(a.run, a.golden, a.history, a.tolerance, a.bless, a.json)
     except (ET.ParseError, ValueError, OSError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2
