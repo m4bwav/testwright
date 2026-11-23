@@ -108,3 +108,39 @@ class UnknownStackDetect(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Perf(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.d = Path(tempfile.mkdtemp())
+
+    def write(self, name, data):
+        p = self.d / name
+        p.write_text(json.dumps(data), encoding="utf-8")
+        return str(p)
+
+    def test_bless_then_compare(self):
+        g = str(self.d / "golden.json")
+        run1 = self.write("r1.json", {"frame_ms_p95": 16.0, "chunk_load_ms": 40, "avg_fps": 60})
+        self.assertEqual(run("perf", run1, "--golden", g)[0], 0)
+        run2 = self.write("r2.json", {"label": "nightly-2", "frame_ms_p95": 20.0,
+                                      "chunk_load_ms": 30, "avg_fps": 50})
+        h = str(self.d / "history.jsonl")
+        code, out = run("perf", run2, "--golden", g, "--history", h)
+        self.assertEqual(code, 1)
+        self.assertIn("regressed  frame_ms_p95", out)
+        self.assertIn("improved   chunk_load_ms", out)
+        self.assertIn("regressed  avg_fps", out)
+        entry = json.loads(Path(h).read_text(encoding="utf-8").splitlines()[0])
+        self.assertEqual(entry["label"], "nightly-2")
+        self.assertEqual(sorted(entry["regressed"]), ["avg_fps", "frame_ms_p95"])
+
+    def test_within_tolerance_and_missing(self):
+        g = self.write("g.json", {"frame_ms": 10.0, "mem_mb": 500})
+        ok = self.write("ok.json", {"frame_ms": 10.5, "mem_mb": 500})
+        self.assertEqual(run("perf", ok, "--golden", g)[0], 0)
+        miss = self.write("m.json", {"frame_ms": 10.0})
+        code, out = run("perf", miss, "--golden", g)
+        self.assertEqual(code, 1)
+        self.assertIn("missing", out)

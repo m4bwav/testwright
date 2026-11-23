@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.3 (2026-11-22)
+- New `tw.py perf`: compares a run's metrics JSON with a golden, flags regressions past a tolerance, appends each run to a JSONL history, `--bless` re-baselines. Reason: a solo Godot dev's perf regression system from day one (r/ClaudeGameDev 1y2w5yy, harvested 2026-11-22); testwright had no performance check before. Tested.
+
 ## 0.1.2 (2026-11-21)
 - Adds .claude-plugin/marketplace.json so the README install works; README lists `detect` and `changed --dir` and links the wiki; pytest.ini keeps `pytest` from collecting the lint fixtures.
 

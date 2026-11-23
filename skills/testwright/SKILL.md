@@ -3,7 +3,7 @@ name: testwright
 description: "Test any code in any language or stack, any kind of test: unit, integration, end-to-end, API, property-based, mutation, snapshot and visual, performance, data and pipeline, game, manual and exploratory. Plan tests by risk, run a suite into one summary (failures, flaky reruns, slow tests, changed-line coverage), judge suite quality (mutation, assertions that never fail, tests of mocks), pin legacy code with characterization tests, test games. Knows .NET, Unity, TypeScript/npm, Python and Roblox Luau so far and adds a reference for each new stack it meets. Use on 'what should I test', 'write tests for this', 'run the tests and tell me what failed', 'is this test flaky', 'are my tests any good', 'coverage on my diff', 'add tests before I refactor this', 'test my Go service', 'test my Unity game'. Not for skill evals (evergreen-test)."
 license: MIT
 metadata:
-  version: 0.1.2
+  version: 0.1.3
 ---
 
 # testwright
@@ -25,6 +25,7 @@ Scope: all testing, in any language and stack, of any kind. The method (risk-fir
 1. `TW detect <repo>` names the stack and runner. Load only that stack's reference: [dotnet](../../references/dotnet.md), [unity](../../references/unity.md), [js](../../references/js.md), [python](../../references/python.md), [luau](../../references/luau.md). `unknown` means a new stack: see section 7.
 2. `TW run <repo> --reruns 2` runs dotnet, Vitest/Jest or pytest with report flags and prints failures, flaky tests (failed, then passed on rerun) and totals. Unity and Luau run by the commands in their reference; then `TW parse <results files>`.
 3. `TW slow <results> --top 10` lists the slowest tests.
+   Performance regressions: have a scripted run (nightly, or a gate before merge) write one metrics JSON (`{"label": "2026-11-22", "frame_ms_p95": 15.2, "chunk_load_ms": 38, "avg_fps": 61}`; lower is better unless a name ends `_fps` or `_per_sec`). `TW perf run.json --golden perf/golden.json --history perf/history.jsonl` writes the golden on first use, then flags metrics past `--tolerance` (default 10%) and appends a line per run, so day-over-day drift shows. Re-baseline only on purpose with `--bless`. Start this on day one of a game.
 4. Report failures with file, test name and first message line. A flaky test is a bug to report, never a pass; do not raise retries to hide it.
 
 ## 3. Coverage on the change

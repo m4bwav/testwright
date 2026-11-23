@@ -1,6 +1,6 @@
 {
   "name": "testwright",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "All testing for any language and stack, any kind (unit, integration, end-to-end, API, property-based, mutation, snapshot, performance, data, game, exploratory): risk-first test plan, one run summary (failures, flaky reruns, slow tests, changed-line coverage), suite quality, characterization tests for legacy code, game tests. Knows .NET, Unity, TypeScript/npm, Python and Roblox Luau first and writes a reference for each new stack it meets.",
   "author": {
     "name": "Mark Rogers"
