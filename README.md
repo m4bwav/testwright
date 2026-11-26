@@ -2,7 +2,7 @@
 
 ![testwright banner](.github/images/banner.jpg)
 
-Testing for any code in any language or stack, and any kind of test: unit, integration, end-to-end, API, property-based, mutation, snapshot and visual, performance, data and pipeline, game, manual and exploratory. A Claude Code plugin with one skill and a standard-library script.
+Testing for any code in any language or stack, and any kind of test: unit, integration, end-to-end, API, property-based, mutation, snapshot and visual, performance, data and pipeline, game, manual and exploratory. An agent plugin with one skill and a standard-library script.
 
 The method works anywhere; stack knowledge grows. It already knows C#/.NET, Unity, TypeScript/npm, Python and Roblox Luau. When it meets a stack it has no notes for, it researches the runner and report format and writes a new reference, so the next run starts from there.
 
